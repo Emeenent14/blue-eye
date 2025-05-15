@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import Home from './pages/Home';
 import SolvePage from './pages/SolvePage';
-import './index.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -35,24 +34,60 @@ function App() {
   };
 
   // OCR and AI processing
-  const handleProcessImage = async () => {
+  const handleProcessImage = async (imageToProcess) => {
+    if (!imageToProcess) {
+      setError('No image selected. Please upload an image first.');
+      return;
+    }
+    
     setIsProcessing(true);
     setError(null);
+    setOcrResult('');
+    setAiSolution('');
     
     try {
-      // This will be implemented in the specific OCR utilities
-      // For now, we're just setting up the state handling
-      setOcrResult('Processing...');
-      setAiSolution('');
+      let extractedText = '';
       
-      // We'll replace this with actual implementation later
-      setTimeout(() => {
-        setIsProcessing(false);
-      }, 2000);
+      // Use appropriate OCR method based on document type
+      if (documentType === 'typed') {
+        // Import and use the typed OCR function
+        const { performTypedOcr, preprocessImage } = await import('./utils/tesseractOcr');
+        
+        // Preprocess image for better OCR results
+        const enhancedImage = { ...imageToProcess, dataUrl: await preprocessImage(imageToProcess.dataUrl) };
+        
+        // Extract text using Tesseract
+        extractedText = await performTypedOcr(enhancedImage, (progress) => {
+          // Optional: Update progress status
+          if (progress.status === 'recognizing text') {
+            const percentage = Math.round(progress.progress * 100);
+            console.log(`OCR Progress: ${percentage}%`);
+          }
+        });
+      } else {
+        // Import and use the handwritten OCR function
+        const { performHandwrittenOcr } = await import('./utils/googleVisionOcr');
+        
+        // Extract text using Google Vision API
+        extractedText = await performHandwrittenOcr(imageToProcess);
+      }
+      
+      // Update state with OCR result
+      setOcrResult(extractedText);
+      
+      if (extractedText.trim()) {
+        // If we have text, send it to AI solver
+        const { solveAssignment } = await import('./utils/aiSolver');
+        const solution = await solveAssignment(extractedText);
+        setAiSolution(solution);
+      } else {
+        throw new Error('No text was detected in the image. Please try a clearer image.');
+      }
     } catch (err) {
-      setError('Failed to process image. Please try again.');
+      console.error('Processing error:', err);
+      setError(err.message || 'Failed to process image. Please try again.');
+    } finally {
       setIsProcessing(false);
-      console.error(err);
     }
   };
 
