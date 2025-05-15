@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Home from './pages/Home';
 import SolvePage from './pages/SolvePage';
+import './index.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');

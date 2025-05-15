@@ -1,25 +1,67 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-md font-medium transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+    padding-top: var(--spacing-2);
+    padding-bottom: var(--spacing-2);
+    border-radius: var(--rounded-md);
+    font-weight: var(--font-medium);
+    transition-property: var(--transition);
+    transition-duration: 200ms;
+    outline: none;
+  }
+  
+  .btn:focus {
+    box-shadow: 0 0 0 2px var(--ring-offset), 0 0 0 4px var(--ring);
   }
   
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+    background-color: var(--color-primary-600);
+    color: var(--color-white);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-primary-700);
+  }
+  
+  .btn-primary:focus {
+    box-shadow: 0 0 0 2px var(--color-primary-500);
   }
   
   .btn-secondary {
-    @apply bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-500;
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-800);
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--color-gray-300);
+  }
+  
+  .btn-secondary:focus {
+    box-shadow: 0 0 0 2px var(--color-gray-500);
   }
   
   .input-field {
-    @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500;
+    display: block;
+    width: 100%;
+    border-radius: var(--rounded-md);
+    border-color: var(--color-gray-300);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .input-field:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 2px var(--color-primary-500);
+    outline: none;
   }
   
   .card {
-    @apply bg-white rounded-lg shadow-md p-6;
+    background-color: var(--color-white);
+    border-radius: var(--rounded-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-md);
   }
 }

@@ -1,12 +1,11 @@
+// tailwind.config.js
 import forms from '@tailwindcss/forms';
 
 export default {
   content: [
     './index.html',
-    './src/**/*.js',
-    './src/**/*.ts',
-    './src/**/*.jsx',
-    './src/**/*.tsx',
+    './src/**/*.{js,ts,jsx,tsx}',
+    './*.{js,jsx}',
   ],
   theme: {
     extend: {
@@ -23,10 +22,8 @@ export default {
           800: '#075985',
           900: '#0c4a6e',
         },
-      }
+      },
     },
   },
-  plugins: [
-    forms,
-  ],
-}
+  plugins: [forms],
+};
