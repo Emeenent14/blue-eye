@@ -93,15 +93,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-primary-600 text-white shadow-md">
+      <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
         <div className="container mx-auto py-4 px-6">
           <h1 
-            className="text-2xl font-bold cursor-pointer" 
+            className="text-2xl font-bold cursor-pointer text-white hover:text-gray-100 transition-colors" 
             onClick={navigateToHome}
           >
             Assignment Solver
           </h1>
-          <p className="text-primary-100">Upload, process, and solve your assignments</p>
+          <p className="text-gray-100 opacity-90">Upload, process, and solve your assignments</p>
         </div>
       </header>
 
