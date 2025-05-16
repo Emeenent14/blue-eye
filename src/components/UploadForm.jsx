@@ -58,9 +58,11 @@ const UploadForm = ({ onImageUpload, documentType }) => {
   return (
     <div className="w-full max-w-xl mx-auto">
       <div 
-        className={`flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg ${
-          dragActive ? 'border-primary-500 bg-primary-50' : 'border-gray-300 bg-gray-50'
-        } hover:bg-gray-100 cursor-pointer transition-colors`}
+        className={`flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg transition-all duration-300 ${
+        dragActive 
+          ? 'border-purple-500 bg-purple-50 shadow-lg transform scale-105' 
+          : 'border-gray-300 bg-gradient-to-br from-blue-50 to-purple-50'
+      } hover:bg-gradient-to-br hover:from-blue-100 hover:to-purple-100 cursor-pointer`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
@@ -80,13 +82,14 @@ const UploadForm = ({ onImageUpload, documentType }) => {
         </p>
       </div>
       <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleChange}
-        className="hidden"
-        capture="environment"
-      />
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleChange}
+          className="hidden"
+          // Remove this line: capture="environment"
+        />
+
       <div className="flex justify-center mt-4">
         <button
           onClick={onButtonClick}

@@ -50,67 +50,48 @@ const SolvePage = ({
       )}
       
       <div className="space-y-8">
-        {!selectedImage ? (
-          // Step 1: Upload Image
-          <div className="card">
-            <h3 className="text-xl font-semibold mb-4">Upload Your Assignment</h3>
-            <UploadForm onImageUpload={onImageUpload} documentType={documentType} />
-          </div>
-        ) : !ocrResult ? (
-          // Step 2: Preview & Process
-          <div className="space-y-6">
+       // In SolvePage.jsx, modify this section:
+          {!selectedImage ? (
+            // Step 1: Upload Image
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Preview &amp; Adjust</h3>
-              <ImagePreview image={selectedImage} onCrop={handleCrop} />
-              
-              <div className="mt-6 flex justify-center">
-                <button
-                  onClick={handleProcess}
-                  disabled={isProcessing}
-                  className={`btn btn-primary ${isProcessing ? 'opacity-75 cursor-not-allowed' : ''}`}
-                >
-                  {isProcessing ? (
-                    <span className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Processing...
-                    </span>
-                  ) : (
-                    'Process Image'
-                  )}
-                </button>
-              </div>
+              <h3 className="text-xl font-semibold mb-4">Upload Your Assignment</h3>
+              <UploadForm onImageUpload={onImageUpload} documentType={documentType} />
             </div>
-            
-            {isProcessing && (
-              <div className="bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4" role="alert">
-                <p className="font-medium">Processing your {documentType} assignment...</p>
-                <p className="text-sm mt-1">
-                  This may take a few moments. We're extracting text with OCR and generating a solution.
-                </p>
+          ) : (
+            // Step 2: Preview & Process or Results
+            <div className="space-y-6">
+              <div className="card">
+                <h3 className="text-xl font-semibold mb-4">Preview &amp; Adjust</h3>
+                <ImagePreview image={selectedImage} onCrop={handleCrop} />
               </div>
-            )}
-          </div>
-        ) : (
-          // Step 3: Results
-          <div className="space-y-6">
-            <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Results</h3>
-              <ResultCard ocrText={ocrResult} aiSolution={aiSolution} />
-              
-              <div className="mt-6 flex justify-center">
-                <button
-                  onClick={onBack}
-                  className="btn btn-primary"
-                >
-                  Solve Another Assignment
-                </button>
-              </div>
+
+              {!ocrResult ? (
+                // Processing controls
+                <div className="card">
+                  <div className="flex justify-center">
+                    <button
+                      onClick={handleProcess}
+                      disabled={isProcessing}
+                      className={`btn btn-primary ${isProcessing ? 'opacity-75 cursor-not-allowed' : ''}`}
+                    >
+                      {isProcessing ? 'Processing...' : 'Process Image'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                // Results
+                <div className="card">
+                  <h3 className="text-xl font-semibold mb-4">Results</h3>
+                  <ResultCard ocrText={ocrResult} aiSolution={aiSolution} />
+                  <div className="mt-6 flex justify-center">
+                    <button onClick={onBack} className="btn btn-primary">
+                      Solve Another Assignment
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

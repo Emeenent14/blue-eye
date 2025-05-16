@@ -6,12 +6,16 @@ const ResultCard = ({ ocrText, aiSolution }) => {
   const [activeTab, setActiveTab] = useState('solution');
   const [copiedText, setCopiedText] = useState(null);
   
-  const copyToClipboard = (text, type) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedText(type);
-      setTimeout(() => setCopiedText(null), 2000);
-    });
-  };
+    const copyToClipboard = async (text, type) => {
+      try {
+        await navigator.clipboard.writeText(text);
+        setCopiedText(type);
+        setTimeout(() => setCopiedText(null), 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        // Fallback or show error message
+      }
+    };
   
   const downloadAsText = (text, filename) => {
     const element = document.createElement('a');
