@@ -96,12 +96,12 @@ function App() {
       <header className="bg-primary-600 text-white shadow-md">
         <div className="container mx-auto py-4 px-6">
           <h1 
-            className="text-2xl font-bold cursor-pointer" 
+            className="text-2xl font-bold cursor-pointer   text-gray-800 " 
             onClick={navigateToHome}
           >
             Assignment Solver
           </h1>
-          <p className="text-primary-100">Upload, process, and solve your assignments</p>
+          <p className=" text-gray-600">Upload, process, and solve your assignments</p>
         </div>
       </header>
 
